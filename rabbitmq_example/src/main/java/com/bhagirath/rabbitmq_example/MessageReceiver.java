@@ -1,15 +1,17 @@
 package com.bhagirath.rabbitmq_example;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 @Component
 public class MessageReceiver {
-
-    @RabbitListener
-    public void receiveAndLogMessage(String message) {
-        System.out.println("Message" + message + ", Time in millis" +System.currentTimeMillis());
+    @RabbitListener(queues = "TestQueue")
+    public void receiveAndLogMessage(Message message) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("Message" + objectMapper.readValue(message.getBody(), MessageBody.class) + ", Time in millis" + System.currentTimeMillis());
     }
 }
