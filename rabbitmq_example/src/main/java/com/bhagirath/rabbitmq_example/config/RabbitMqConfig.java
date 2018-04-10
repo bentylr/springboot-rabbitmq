@@ -35,8 +35,9 @@ public class RabbitMqConfig {
     @Bean(name = "listenerFactory")
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setMaxConcurrentConsumers(2);
-        factory.setConcurrentConsumers(2);
+        factory.setConnectionFactory(connectionFactory);
+        factory.setMaxConcurrentConsumers(5);
+        factory.setConcurrentConsumers(5);
         return factory;
     }
 

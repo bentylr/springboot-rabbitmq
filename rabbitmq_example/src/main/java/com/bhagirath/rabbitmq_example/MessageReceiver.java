@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Component
 public class MessageReceiver {
-    @RabbitListener(queues = "TestQueue")
+    @RabbitListener(queues = "TestQueue", containerFactory = "listenerFactory")
     public void receiveAndLogMessage(Message message) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println("Message" + objectMapper.readValue(message.getBody(), MessageBody.class) + ", Time in millis" + System.currentTimeMillis());
